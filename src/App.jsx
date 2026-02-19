@@ -32,7 +32,6 @@ export default function App() {
     <div className="app">
       <header className="app__header">
         <h1 className="app__title">Unfold</h1>
-        <p className="app__subtitle">Swipe om de volgende vraag te zien</p>
       </header>
 
       <div className="app__stage">
@@ -57,9 +56,11 @@ export default function App() {
         )}
       </div>
 
-      <footer className="app__footer">
-        <span className="app__counter">{Math.max(0, deck.length - gone)} vragen over</span>
-      </footer>
+      <div className="app__bottom-sheet">
+        <div className="app__grabber" />
+        <span className="app__sheet-title">Unfold Deep</span>
+        <div className="app__home-indicator" />
+      </div>
     </div>
   )
 }

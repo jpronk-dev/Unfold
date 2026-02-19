@@ -52,23 +52,23 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
     }
   }
 
-  const rotation = drag.x / 18
-  const scale = isTop ? 1 : 0.95 - stackIndex * 0.04
-  const translateY = isTop ? 0 : stackIndex * 10
+  const dragRotation = drag.x / 18
+  const stackRotations = [0, 3.74, 7.74]
+  const baseRotation = stackRotations[stackIndex] || 0
 
-  let transform = `scale(${scale}) translateY(${translateY}px)`
-  let transition = 'transform 0.3s ease, box-shadow 0.3s ease'
+  let transform = `rotate(${baseRotation}deg)`
+  let transition = 'transform 0.3s ease'
   let opacity = 1
 
   if (isTop && !exiting) {
-    transform = `translate(${drag.x}px, ${drag.y}px) rotate(${rotation}deg) scale(1)`
+    transform = `translate(${drag.x}px, ${drag.y}px) rotate(${dragRotation}deg)`
     transition = drag.dragging ? 'none' : 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
   }
 
   if (exiting === 'left')  transform = `translate(-150vw, ${drag.y}px) rotate(-30deg)`
   if (exiting === 'right') transform = `translate(150vw, ${drag.y}px) rotate(30deg)`
-  if (exiting === 'up')    transform = `translate(${drag.x}px, -150vh) rotate(${rotation}deg)`
-  if (exiting === 'down')  transform = `translate(${drag.x}px, 150vh) rotate(${rotation}deg)`
+  if (exiting === 'up')    transform = `translate(${drag.x}px, -150vh) rotate(${dragRotation}deg)`
+  if (exiting === 'down')  transform = `translate(${drag.x}px, 150vh) rotate(${dragRotation}deg)`
 
   if (exiting) {
     transition = 'transform 0.35s ease-in, opacity 0.35s ease-in'
