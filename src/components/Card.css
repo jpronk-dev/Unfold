@@ -33,22 +33,3 @@
   margin: 0;
   width: 233px;
 }
-
-.card__hint {
-  position: absolute;
-  top: 24px;
-  font-size: 1.4rem;
-  font-weight: 700;
-  opacity: 0.45;
-  pointer-events: none;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #a07850;
-}
-
-.card__hint--right {
-  right: 20px;
-}
-
-.card__hint--left {
-  left: 20px;
-}

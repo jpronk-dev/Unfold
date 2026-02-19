@@ -84,9 +84,6 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
     opacity = 0
   }
 
-  const isDraggingRight = isTop && drag.x > SWIPE_THRESHOLD * 0.5
-  const isDraggingLeft  = isTop && drag.x < -SWIPE_THRESHOLD * 0.5
-
   return (
     <div
       className={`card ${isTop ? 'card--top' : ''}`}
@@ -99,8 +96,6 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
       onTouchMove={onDragMove}
       onTouchEnd={onDragEnd}
     >
-      {isDraggingRight && <span className="card__hint card__hint--right">→</span>}
-      {isDraggingLeft  && <span className="card__hint card__hint--left">←</span>}
       <p className="card__question">{question}</p>
     </div>
   )
