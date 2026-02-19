@@ -76,10 +76,7 @@ export default function CategorySheet({ open, onClose, onSelect, activeId }) {
               aria-pressed={activeId === cat.id}
             >
               <span className="category-item__icon">{cat.icon}</span>
-              <div className="category-item__text">
-                <span className="category-item__label">{cat.label}</span>
-                <span className="category-item__desc">{cat.description}</span>
-              </div>
+              <span className="category-item__label">{cat.label}</span>
               {activeId === cat.id && <span className="category-item__check">✓</span>}
             </button>
           ))}
