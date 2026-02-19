@@ -13,23 +13,31 @@ function shuffle(arr) {
   return a
 }
 
+const ALL_QUESTIONS = shuffle(questions)
+
 export default function App() {
-  const [deck, setDeck] = useState(() => shuffle(questions))
+  const [deck, setDeck] = useState(ALL_QUESTIONS)
   const [gone, setGone] = useState(0)
   const [sheetOpen, setSheetOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState('Unfold Deep')
+  const [activeCategory, setActiveCategory] = useState(null)
 
   function handleSwipe() {
     setGone(g => g + 1)
   }
 
   function handleRestart() {
-    setDeck(shuffle(questions))
+    setDeck(shuffle(activeCategory
+      ? questions.filter(q => q.category === activeCategory.id)
+      : questions
+    ))
     setGone(0)
   }
 
   function handleSelectCategory(cat) {
-    setActiveCategory(cat.label)
+    const filtered = shuffle(questions.filter(q => q.category === cat.id))
+    setDeck(filtered)
+    setGone(0)
+    setActiveCategory(cat)
     setSheetOpen(false)
   }
 
@@ -55,8 +63,8 @@ export default function App() {
           <div className="app__card-center">
             {visible.map((question, i) => (
               <Card
-                key={deck.indexOf(question)}
-                question={question}
+                key={question.id}
+                question={question.text}
                 onSwipe={handleSwipe}
                 isTop={i === 0}
                 stackIndex={i}
@@ -66,15 +74,23 @@ export default function App() {
         )}
       </div>
 
-      <button className="app__bottom-bar" onClick={() => setSheetOpen(true)}>
+      <button
+        className="app__bottom-bar"
+        onClick={() => setSheetOpen(true)}
+        aria-label="Kies een categorie"
+        aria-expanded={sheetOpen}
+      >
         <div className="app__grabber" />
-        <span className="app__bar-title">{activeCategory}</span>
+        <span className="app__bar-title">
+          {activeCategory ? activeCategory.label : 'Kies een categorie'}
+        </span>
       </button>
 
       <CategorySheet
         open={sheetOpen}
         onClose={() => setSheetOpen(false)}
         onSelect={handleSelectCategory}
+        activeId={activeCategory?.id}
       />
     </div>
   )
