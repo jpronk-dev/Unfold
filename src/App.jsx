@@ -52,15 +52,17 @@ export default function App() {
             </button>
           </div>
         ) : (
-          visible.map((question, i) => (
-            <Card
-              key={deck.indexOf(question)}
-              question={question}
-              onSwipe={handleSwipe}
-              isTop={i === 0}
-              stackIndex={i}
-            />
-          ))
+          <div className="app__card-center">
+            {visible.map((question, i) => (
+              <Card
+                key={deck.indexOf(question)}
+                question={question}
+                onSwipe={handleSwipe}
+                isTop={i === 0}
+                stackIndex={i}
+              />
+            ))}
+          </div>
         )}
       </div>
 
