@@ -95,6 +95,13 @@ body {
   align-items: center;
   padding: 10px 16px 24px;
   gap: 2px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.app__bottom-bar:active {
+  background: #f5ede6;
 }
 
 .app__grabber {

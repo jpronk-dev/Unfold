@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Card from './components/Card'
+import CategorySheet from './components/CategorySheet'
 import { questions } from './questions'
 import './App.css'
 
@@ -15,6 +16,8 @@ function shuffle(arr) {
 export default function App() {
   const [deck, setDeck] = useState(() => shuffle(questions))
   const [gone, setGone] = useState(0)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [activeCategory, setActiveCategory] = useState('Unfold Deep')
 
   function handleSwipe() {
     setGone(g => g + 1)
@@ -23,6 +26,11 @@ export default function App() {
   function handleRestart() {
     setDeck(shuffle(questions))
     setGone(0)
+  }
+
+  function handleSelectCategory(cat) {
+    setActiveCategory(cat.label)
+    setSheetOpen(false)
   }
 
   const remaining = deck.slice(gone)
@@ -56,10 +64,16 @@ export default function App() {
         )}
       </div>
 
-      <div className="app__bottom-bar">
+      <button className="app__bottom-bar" onClick={() => setSheetOpen(true)}>
         <div className="app__grabber" />
-        <span className="app__bar-title">Unfold Deep</span>
-      </div>
+        <span className="app__bar-title">{activeCategory}</span>
+      </button>
+
+      <CategorySheet
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+        onSelect={handleSelectCategory}
+      />
     </div>
   )
 }
