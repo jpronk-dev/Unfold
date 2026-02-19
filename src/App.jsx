@@ -56,10 +56,9 @@ export default function App() {
         )}
       </div>
 
-      <div className="app__bottom-sheet">
+      <div className="app__bottom-bar">
         <div className="app__grabber" />
-        <span className="app__sheet-title">Unfold Deep</span>
-        <div className="app__home-indicator" />
+        <span className="app__bar-title">Unfold Deep</span>
       </div>
     </div>
   )

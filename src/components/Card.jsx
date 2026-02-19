@@ -5,9 +5,8 @@ const SWIPE_THRESHOLD = 80
 
 export default function Card({ question, onSwipe, isTop, stackIndex }) {
   const [drag, setDrag] = useState({ x: 0, y: 0, dragging: false })
-  const [exiting, setExiting] = useState(null) // 'left' | 'right' | 'up' | 'down'
+  const [exiting, setExiting] = useState(null)
   const startPos = useRef({ x: 0, y: 0 })
-  const cardRef = useRef(null)
 
   function getPointerPos(e) {
     if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY }
@@ -16,6 +15,7 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
 
   function onDragStart(e) {
     if (!isTop || exiting) return
+    e.preventDefault()
     const pos = getPointerPos(e)
     startPos.current = pos
     setDrag({ x: 0, y: 0, dragging: true })
@@ -23,6 +23,7 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
 
   function onDragMove(e) {
     if (!drag.dragging) return
+    e.preventDefault()
     const pos = getPointerPos(e)
     setDrag(d => ({
       ...d,
@@ -52,23 +53,31 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
     }
   }
 
-  const dragRotation = drag.x / 18
+  // Cards are centered via CSS (inset: 0; margin: auto)
+  // Transforms are applied on top of that centered position
   const stackRotations = [0, 3.74, 7.74]
   const baseRotation = stackRotations[stackIndex] || 0
+  const dragRotation = drag.x / 18
 
-  let transform = `rotate(${baseRotation}deg)`
+  let transform
   let transition = 'transform 0.3s ease'
   let opacity = 1
 
   if (isTop && !exiting) {
     transform = `translate(${drag.x}px, ${drag.y}px) rotate(${dragRotation}deg)`
-    transition = drag.dragging ? 'none' : 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+    transition = drag.dragging
+      ? 'none'
+      : 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+  } else if (!isTop) {
+    transform = `rotate(${baseRotation}deg)`
+  } else {
+    transform = `translate(0px, 0px) rotate(0deg)`
   }
 
   if (exiting === 'left')  transform = `translate(-150vw, ${drag.y}px) rotate(-30deg)`
-  if (exiting === 'right') transform = `translate(150vw, ${drag.y}px) rotate(30deg)`
+  if (exiting === 'right') transform = `translate(150vw,  ${drag.y}px) rotate(30deg)`
   if (exiting === 'up')    transform = `translate(${drag.x}px, -150vh) rotate(${dragRotation}deg)`
-  if (exiting === 'down')  transform = `translate(${drag.x}px, 150vh) rotate(${dragRotation}deg)`
+  if (exiting === 'down')  transform = `translate(${drag.x}px,  150vh) rotate(${dragRotation}deg)`
 
   if (exiting) {
     transition = 'transform 0.35s ease-in, opacity 0.35s ease-in'
@@ -80,7 +89,6 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
 
   return (
     <div
-      ref={cardRef}
       className={`card ${isTop ? 'card--top' : ''}`}
       style={{ transform, transition, opacity, zIndex: 10 - stackIndex }}
       onMouseDown={onDragStart}
