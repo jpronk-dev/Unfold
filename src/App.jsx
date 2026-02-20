@@ -70,18 +70,7 @@ export default function App() {
         <div className="app__header-inner">
           <div className="app__header-spacer" />
           <h1 className="app__title">Unfold</h1>
-          <button
-            className="app__settings-btn"
-            onClick={() => setSheetOpen(true)}
-            aria-label="Kies een categorie"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 7h-9"/>
-              <path d="M14 17H5"/>
-              <circle cx="17" cy="17" r="3"/>
-              <circle cx="7" cy="7" r="3"/>
-            </svg>
-          </button>
+          <div className="app__header-spacer" />
         </div>
       </header>
 
