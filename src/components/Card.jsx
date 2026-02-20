@@ -86,7 +86,7 @@ export default function Card({ question, onSwipe, isTop, stackIndex }) {
 
   return (
     <div
-      className={`card ${isTop ? 'card--top' : ''}`}
+      className={`card card--stack-${stackIndex} ${isTop ? 'card--top' : ''}`}
       style={{ transform, transition, opacity, zIndex: 10 - stackIndex }}
       onMouseDown={onDragStart}
       onMouseMove={onDragMove}
