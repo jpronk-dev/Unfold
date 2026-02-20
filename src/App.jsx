@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import Card from './components/Card'
-import CategorySheet from './components/CategorySheet'
+import CategorySheet, { categories } from './components/CategorySheet'
 import { questions } from './questions'
 import './App.css'
 
@@ -13,13 +13,22 @@ function shuffle(arr) {
   return a
 }
 
-const ALL_QUESTIONS = shuffle(questions)
+function getInitialCategory() {
+  const saved = localStorage.getItem('unfold_category')
+  return categories.find(c => c.id === saved) ?? categories[0]
+}
+
+function getInitialDeck(cat) {
+  return shuffle(questions.filter(q => q.category === cat.id))
+}
+
+const initialCategory = getInitialCategory()
 
 export default function App() {
-  const [deck, setDeck] = useState(ALL_QUESTIONS)
+  const [activeCategory, setActiveCategory] = useState(initialCategory)
+  const [deck, setDeck] = useState(() => getInitialDeck(initialCategory))
   const [gone, setGone] = useState(0)
   const [sheetOpen, setSheetOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState(null)
   const barTouchStartY = useRef(0)
 
   function handleSwipe() {
@@ -49,6 +58,7 @@ export default function App() {
     setGone(0)
     setActiveCategory(cat)
     setSheetOpen(false)
+    localStorage.setItem('unfold_category', cat.id)
   }
 
   const remaining = deck.slice(gone)
