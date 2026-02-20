@@ -17,11 +17,10 @@ export const categories = [
     label: 'Vrienden',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M10 11h.01"/><path d="M14 6h.01"/>
-        <path d="M2 2a26.6 26.6 0 0 1 10 20c.9-6.82 1.5-9.5 4-14"/>
-        <path d="M16 2c0 4.42-1.4 9.31-4 14"/>
-        <path d="m5 18 4-2"/><path d="m12 16 4 2"/>
-        <path d="m14 21 5-4"/><path d="m5 21-1-4"/>
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
       </svg>
     ),
   },
